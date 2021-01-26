@@ -1,0 +1,8 @@
+prefix=/home/lucas/catkin_ws/install
+
+Name: biopayload
+Description: Description of biopayload
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

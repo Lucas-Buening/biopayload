@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+
+"""
+===============================================================================
+Program Description 
+	This program takes joystick input from the main controller, processes 
+it, and sends appropriate intructions to the biopayload nodes.
+
+Author:         Lucas Buening, lucas.r.buening@gmail.com
+Maintainer:     Lucas Buening, lucas.r.buening@gmail.com
+Version:        January 16, 2021
+Status:         In progress
+===============================================================================
+"""
+
+import rospy
+from gpiozero import Motor
+
+class Biopayload():
+    """
+    Class for controlling the biopayload components
+    """
+    
+    def __init__(self):
+        # Setup gpiozero for each component
+        self.auger_spin = Motor(forward=, backward=)
+        self.auger_vert = Motor(forward=, backward=)
+
+        # Setup ROS implementation
+        rospy.init_node('biopayload', anonymous=False)
+        rospy.Subscriber('/auger_spin', , self.set_spin)
+        rospy.Subscriber('/auger_vert', , self.set_vert)
+
+
+    def set_spin(self, speed):
+
+
+    def set_vert(self, speed):
+
+
+if __name__ == '__main__':
+    biopayload = Biopayload()
