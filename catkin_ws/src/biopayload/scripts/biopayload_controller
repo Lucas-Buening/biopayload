@@ -14,7 +14,26 @@ Status:         In progress
 """
 
 import rospy
-from gpiozero import Motor
+
+#import Raspi_MotorHAT, Raspi_DCMotor, Raspi_Stepper 
+from Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor, Raspi_StepperMotor
+
+import time
+import atexit
+
+# Create an object for the Raspi_MotroHAT with the IC2 address 0x6F
+mh = Raspi_MotorHAT(0x6F)
+
+def turnOffMotors():
+    """
+    Auto-disables all motors on shutdown
+    """
+	mh.getMotor(1).run(Raspi_MotorHAT.RELEASE)
+	mh.getMotor(2).run(Raspi_MotorHAT.RELEASE)
+	mh.getMotor(3).run(Raspi_MotorHAT.RELEASE)
+	mh.getMotor(4).run(Raspi_MotorHAT.RELEASE)
+
+atexit.register(turnOffMotors)
 
 class Biopayload():
     """
@@ -22,20 +41,44 @@ class Biopayload():
     """
     
     def __init__(self):
-        # Setup gpiozero for each component
-        self.auger_spin = Motor(forward=, backward=)
-        self.auger_vert = Motor(forward=, backward=)
+        # Get the motor objects from the motor hat
+        self.carousel = mh.getStepper(200, 1)    # carousel stepper, 200 steps/rev (1.8 degs/step), motor port 1
+        self.auger_vert = mh.getMotor(3)     # auger vertical movement motor, motor port 3
+        
+        # Set stepper speed to predetermined value
+        self.carousel.setSpeed(30)
 
-        # Setup ROS implementation
-        rospy.init_node('biopayload', anonymous=False)
-        rospy.Subscriber('/auger_spin', , self.set_spin)
-        rospy.Subscriber('/auger_vert', , self.set_vert)
+        # Setup ROS node and topics
+        rospy.init_node('biopayload_listener', anoynmous=False)
+        rospy.Subscriber('/carousel_step', Twist, self.carouselStep)
+        rospy.Subscriber('/auger_vert', Twist, self.augerVert)
+        rospy.Subscriber('/auger_spin', Twist, self.augerSpin)
 
+    def carouselStep(self, data)
+        """
+        Function for moving the stepper motor
+        """
+        steps = int(data.linear.x)
 
-    def set_spin(self, speed):
+        if speed > 0:
+            self.carousel.step(steps, Raspi_MotorHAT.FORWARD, Raspi_MotorHAT.DOUBLE)
+        else if speed < 0:
+            self.carousel.step(steps, Raspi_MotorHAT.BACKWARD, Raspi_MotorHAT.DOUBLE)
 
+    def augerVert(self, data)
+        """
+        Function for setting the speed of the augers linear actuator
+        """
+        speed = int(data.linear.x)
+        
+        if speed > 0:
+            self.auger_vert.run(Raspi_MotorHAT.FORWARD)
+        else if speed < 0:
+            self.auger_vert.run(Raspi_MotorHAT.BACKWARD)
 
-    def set_vert(self, speed):
+        self.auger_vert.setSpeed(abs(speed))
+
+    def augerSpin(self, data)
 
 
 if __name__ == '__main__':
