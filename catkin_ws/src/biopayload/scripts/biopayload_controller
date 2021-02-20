@@ -70,8 +70,10 @@ class Biopayload():
         # Rename Cytron Port M1 as auger spin
         self.auger_spin = p1
         
-        # Set stepper speed to predetermined value
+        # Create variables for controlling the stepper motor
         self.carousel.setSpeed(30)
+        self.stepSize = 33
+        self.stepCount = 0
 
         # Setup ROS node and topics
         rospy.init_node('biopayload_listener', anoynmous=False)
@@ -83,12 +85,17 @@ class Biopayload():
         """
         Function for moving the stepper motor
         """
-        steps = int(data.linear.x)
+        steps = int(data.linear.x) * self.stepSize
+
+        if (self.stepCount % 3) == 1:
+            steps += 1
 
         if speed > 0:
             self.carousel.step(steps, Raspi_MotorHAT.FORWARD, Raspi_MotorHAT.DOUBLE)
         else if speed < 0:
             self.carousel.step(steps, Raspi_MotorHAT.BACKWARD, Raspi_MotorHAT.DOUBLE)
+
+        self.stepCount += 1
 
     def augerVert(self, data)
         """
