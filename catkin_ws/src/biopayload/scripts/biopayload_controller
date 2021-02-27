@@ -72,7 +72,8 @@ class Biopayload():
         
         # Create variables for controlling the stepper motor
         self.carousel.setSpeed(30)
-        self.stepSize = 33
+        self.numVials = 10
+        self.stepSize = 200 / self.numVials
         self.stepCount = 0
 
         # Setup ROS node and topics
@@ -87,8 +88,8 @@ class Biopayload():
         """
         steps = int(data.linear.x) * self.stepSize
 
-        if (self.stepCount % 3) == 1:
-            steps += 1
+        if self.stepCount == self.numVials:
+            steps += (200 % self.numVials)
 
         if speed > 0:
             self.carousel.step(steps, Raspi_MotorHAT.FORWARD, Raspi_MotorHAT.DOUBLE)
