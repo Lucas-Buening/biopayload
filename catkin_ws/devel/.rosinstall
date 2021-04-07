@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/lucas/catkin_ws/devel/setup.sh
+    local-name: /home/ubuntu/BRC_Biopayload/catkin_ws/devel/setup.sh

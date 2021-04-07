@@ -1,8 +1,8 @@
-# Install script for directory: /home/lucas/catkin_ws/src/biopayload
+# Install script for directory: /home/ubuntu/BRC_Biopayload/catkin_ws/src/biopayload
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/lucas/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/ubuntu/BRC_Biopayload/catkin_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/lucas/catkin_ws/build/biopayload/catkin_generated/installspace/biopayload.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/ubuntu/BRC_Biopayload/catkin_ws/build/biopayload/catkin_generated/installspace/biopayload.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/biopayload/cmake" TYPE FILE FILES
-    "/home/lucas/catkin_ws/build/biopayload/catkin_generated/installspace/biopayloadConfig.cmake"
-    "/home/lucas/catkin_ws/build/biopayload/catkin_generated/installspace/biopayloadConfig-version.cmake"
+    "/home/ubuntu/BRC_Biopayload/catkin_ws/build/biopayload/catkin_generated/installspace/biopayloadConfig.cmake"
+    "/home/ubuntu/BRC_Biopayload/catkin_ws/build/biopayload/catkin_generated/installspace/biopayloadConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/biopayload" TYPE FILE FILES "/home/lucas/catkin_ws/src/biopayload/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/biopayload" TYPE FILE FILES "/home/ubuntu/BRC_Biopayload/catkin_ws/src/biopayload/package.xml")
 endif()
 

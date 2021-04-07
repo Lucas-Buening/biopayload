@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lucas/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/ubuntu/BRC_Biopayload/catkin_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lucas/catkin_ws/build
+CMAKE_BINARY_DIR = /home/ubuntu/BRC_Biopayload/catkin_ws/build
 
 # Utility rule file for std_msgs_generate_messages_cpp.
 
@@ -63,10 +63,10 @@ beginner_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/build: std_msgs
 .PHONY : beginner_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
 
 beginner_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean:
-	cd /home/lucas/catkin_ws/build/beginner_tutorials && $(CMAKE_COMMAND) -P CMakeFiles/std_msgs_generate_messages_cpp.dir/cmake_clean.cmake
+	cd /home/ubuntu/BRC_Biopayload/catkin_ws/build/beginner_tutorials && $(CMAKE_COMMAND) -P CMakeFiles/std_msgs_generate_messages_cpp.dir/cmake_clean.cmake
 .PHONY : beginner_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
 
 beginner_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/depend:
-	cd /home/lucas/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lucas/catkin_ws/src /home/lucas/catkin_ws/src/beginner_tutorials /home/lucas/catkin_ws/build /home/lucas/catkin_ws/build/beginner_tutorials /home/lucas/catkin_ws/build/beginner_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ubuntu/BRC_Biopayload/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/BRC_Biopayload/catkin_ws/src /home/ubuntu/BRC_Biopayload/catkin_ws/src/beginner_tutorials /home/ubuntu/BRC_Biopayload/catkin_ws/build /home/ubuntu/BRC_Biopayload/catkin_ws/build/beginner_tutorials /home/ubuntu/BRC_Biopayload/catkin_ws/build/beginner_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : beginner_tutorials/CMakeFiles/std_msgs_generate_messages_cpp.dir/depend
 

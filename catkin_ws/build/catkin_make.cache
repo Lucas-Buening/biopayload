@@ -1,2 +1,2 @@
 beginner_tutorials:biopayload
--DCATKIN_DEVEL_PREFIX=/home/lucas/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/lucas/catkin_ws/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/home/ubuntu/BRC_Biopayload/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ubuntu/BRC_Biopayload/catkin_ws/install -G Unix Makefiles
