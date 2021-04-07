@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/BRC_Biopayload/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/lucas/BRC_Biopayload/catkin_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ubuntu/BRC_Biopayload/catkin_ws/build
+CMAKE_BINARY_DIR = /home/lucas/BRC_Biopayload/catkin_ws/build
 
 # Utility rule file for tests.
 
@@ -67,6 +67,6 @@ CMakeFiles/tests.dir/clean:
 .PHONY : CMakeFiles/tests.dir/clean
 
 CMakeFiles/tests.dir/depend:
-	cd /home/ubuntu/BRC_Biopayload/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/BRC_Biopayload/catkin_ws/src /home/ubuntu/BRC_Biopayload/catkin_ws/src /home/ubuntu/BRC_Biopayload/catkin_ws/build /home/ubuntu/BRC_Biopayload/catkin_ws/build /home/ubuntu/BRC_Biopayload/catkin_ws/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/lucas/BRC_Biopayload/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/lucas/BRC_Biopayload/catkin_ws/src /home/lucas/BRC_Biopayload/catkin_ws/src /home/lucas/BRC_Biopayload/catkin_ws/build /home/lucas/BRC_Biopayload/catkin_ws/build /home/lucas/BRC_Biopayload/catkin_ws/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/tests.dir/depend
 

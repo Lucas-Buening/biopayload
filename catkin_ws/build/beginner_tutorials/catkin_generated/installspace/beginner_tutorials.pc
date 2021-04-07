@@ -1,4 +1,4 @@
-prefix=/home/ubuntu/BRC_Biopayload/catkin_ws/install
+prefix=/home/lucas/BRC_Biopayload/catkin_ws/install
 
 Name: beginner_tutorials
 Description: Description of beginner_tutorials

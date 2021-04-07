@@ -67,14 +67,14 @@ set(biopayload_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(biopayload_SOURCE_PREFIX /home/ubuntu/BRC_Biopayload/catkin_ws/src/biopayload)
-  set(biopayload_DEVEL_PREFIX /home/ubuntu/BRC_Biopayload/catkin_ws/devel)
+  set(biopayload_SOURCE_PREFIX /home/lucas/BRC_Biopayload/catkin_ws/src/biopayload)
+  set(biopayload_DEVEL_PREFIX /home/lucas/BRC_Biopayload/catkin_ws/devel)
   set(biopayload_INSTALL_PREFIX "")
   set(biopayload_PREFIX ${biopayload_DEVEL_PREFIX})
 else()
   set(biopayload_SOURCE_PREFIX "")
   set(biopayload_DEVEL_PREFIX "")
-  set(biopayload_INSTALL_PREFIX /home/ubuntu/BRC_Biopayload/catkin_ws/install)
+  set(biopayload_INSTALL_PREFIX /home/lucas/BRC_Biopayload/catkin_ws/install)
   set(biopayload_PREFIX ${biopayload_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/ubuntu/BRC_Biopayload/catkin_ws/install/lib;/opt/ros/noetic/lib)
+    foreach(path /home/lucas/BRC_Biopayload/catkin_ws/install/lib;/home/lucas/BRC_Biopayload/catkin_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

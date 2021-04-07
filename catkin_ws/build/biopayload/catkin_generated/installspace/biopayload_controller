@@ -2,8 +2,8 @@
 
 """
 ===============================================================================
-Program Description
-	This program takes joystick input from the main controller, processes
+Program Description 
+	This program takes joystick input from the main controller, processes 
 it, and sends appropriate intructions to the biopayload nodes.
 
 Author:         Lucas Buening, lucas.r.buening@gmail.com
@@ -18,7 +18,7 @@ import time
 import atexit
 import RPi.GPIO as GPIO
 
-# import Raspi_MotorHAT, Raspi_DCMotor, Raspi_Stepper
+# import Raspi_MotorHAT, Raspi_DCMotor, Raspi_Stepper 
 from Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor, Raspi_StepperMotor
 
 
@@ -40,21 +40,19 @@ p2 = GPIO.PWM(AN2, 100)			# set pwm for M2
 # Create an object for the Raspi_MotroHAT with the IC2 address 0x6F
 mh = Raspi_MotorHAT(0x6F)
 
-
 def turnOffMotors():
     """
     Auto-disables all motors on shutdown
     """
     # Raspi Motor Hat
-    mh.getMotor(1).run(Raspi_MotorHAT.RELEASE)
-    mh.getMotor(2).run(Raspi_MotorHAT.RELEASE)
-    mh.getMotor(3).run(Raspi_MotorHAT.RELEASE)
-    mh.getMotor(4).run(Raspi_MotorHAT.RELEASE)
+	mh.getMotor(1).run(Raspi_MotorHAT.RELEASE)
+	mh.getMotor(2).run(Raspi_MotorHAT.RELEASE)
+	mh.getMotor(3).run(Raspi_MotorHAT.RELEASE)
+	mh.getMotor(4).run(Raspi_MotorHAT.RELEASE)
 
     # Cytron Motor Hat
     p1.start(0)
     p2.start(0)
-
 
 atexit.register(turnOffMotors)
 
@@ -63,17 +61,15 @@ class Biopayload():
     """
     Class for controlling the biopayload components
     """
-
+    
     def __init__(self):
         # Get the motor objects from the Raspi motor hat
-        # carousel stepper, 200 steps/rev (1.8 degs/step), motor port 1
-        self.carousel = mh.getStepper(200, 1)
-        # auger vertical movement motor, motor port 3
-        self.auger_vert = mh.getMotor(3)
+        self.carousel = mh.getStepper(200, 1)    # carousel stepper, 200 steps/rev (1.8 degs/step), motor port 1
+        self.auger_vert = mh.getMotor(3)     # auger vertical movement motor, motor port 3
 
         # Rename Cytron Port M1 as auger spin
         self.auger_spin = p1
-
+        
         # Create variables for controlling the stepper motor
         self.carousel.setSpeed(30)
         self.numVials = 10
@@ -86,52 +82,48 @@ class Biopayload():
         rospy.Subscriber('/auger_vert', Twist, self.augerVert)
         rospy.Subscriber('/auger_spin', Twist, self.augerSpin)
 
-    def carouselStep(self, data):
-      """
-      Function for moving the stepper motor
-      """
-      steps = int(data.linear.x) * self.stepSize
+    def carouselStep(self, data)
+        """
+        Function for moving the stepper motor
+        """
+        steps = int(data.linear.x) * self.stepSize
 
-      if self.stepCount == self.numVials:
-        steps += (200 % self.numVials)
+        if self.stepCount == self.numVials:
+            steps += (200 % self.numVials)
 
         if speed > 0:
-          self.carousel.step(steps, Raspi_MotorHAT.FORWARD,
-                               Raspi_MotorHAT.DOUBLE)
-        elif speed < 0:
-          self.carousel.step(steps, Raspi_MotorHAT.BACKWARD,
-                               Raspi_MotorHAT.DOUBLE)
+            self.carousel.step(steps, Raspi_MotorHAT.FORWARD, Raspi_MotorHAT.DOUBLE)
+        else if speed < 0:
+            self.carousel.step(steps, Raspi_MotorHAT.BACKWARD, Raspi_MotorHAT.DOUBLE)
 
         self.stepCount += 1
 
-    def augerVert(self, data):
-      """
-      Function for setting the speed of the auger's linear actuator
-      """
-      speed = int(data.linear.x)
-
-      if speed > 0:
-        self.auger_vert.run(Raspi_MotorHAT.FORWARD)
+    def augerVert(self, data)
+        """
+        Function for setting the speed of the auger's linear actuator
+        """
+        speed = int(data.linear.x)
         
-      elif speed < 0:
-        self.auger_vert.run(Raspi_MotorHAT.BACKWARD)
+        if speed > 0:
+            self.auger_vert.run(Raspi_MotorHAT.FORWARD)
+        else if speed < 0:
+            self.auger_vert.run(Raspi_MotorHAT.BACKWARD)
+
         self.auger_vert.setSpeed(abs(speed))
 
-    def augerSpin(self, data):
-      """
-      Function for setting the speed of the auger's DC motor
-      """
-      speed = int(data.linear.x)
+    def augerSpin(self, data)
+        """
+        Function for setting the speed of the auger's DC motor
+        """
+        speed = int(data.linear.x)
+        
+        if speed > 0:
+            GPIO.output(DIG1, GPIO.LOW)          # set DIG1 as LOW, to control direction
+        else if speed < 0:
+            GPIO.output(DIG1, GPIO.HIGH)         # set DIG1 as HIGH, to control direction
 
-      if speed > 0:
-        # set DIG1 as LOW, to control direction
-        GPIO.output(DIG1, GPIO.LOW)
-          
-      elif speed < 0:
-        # set DIG1 as HIGH, to control direction
-        GPIO.output(DIG1, GPIO.HIGH)
+        self.auger_spin.start(abs(speed))
 
-      self.auger_spin.start(abs(speed))
 
 
 if __name__ == '__main__':

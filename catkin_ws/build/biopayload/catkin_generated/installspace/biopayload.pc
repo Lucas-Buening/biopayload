@@ -1,4 +1,4 @@
-prefix=/home/ubuntu/BRC_Biopayload/catkin_ws/install
+prefix=/home/lucas/BRC_Biopayload/catkin_ws/install
 
 Name: biopayload
 Description: Description of biopayload

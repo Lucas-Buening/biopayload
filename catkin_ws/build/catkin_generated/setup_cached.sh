@@ -7,7 +7,5 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/ubuntu/BRC_Biopayload/catkin_ws/devel:$CMAKE_PREFIX_PATH"
-export PWD='/home/ubuntu/BRC_Biopayload/catkin_ws/build'
-export ROSLISP_PACKAGE_DIRECTORIES='/home/ubuntu/BRC_Biopayload/catkin_ws/devel/share/common-lisp'
-export ROS_PACKAGE_PATH="/home/ubuntu/BRC_Biopayload/catkin_ws/src:$ROS_PACKAGE_PATH"
+export PATH='/opt/ros/noetic/bin:~/bin:/home/lucas/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+export PWD='/home/lucas/BRC_Biopayload/catkin_ws/build'
