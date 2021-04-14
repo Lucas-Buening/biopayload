@@ -14,6 +14,7 @@ Status:         In progress
 """
 
 import rospy
+from std_msgs.msg import Int8
 import time
 import atexit
 import RPi.GPIO as GPIO
@@ -76,8 +77,8 @@ class Biopayload():
 
         # Create variables for controlling the stepper motor
         self.carousel.setSpeed(30)
-        self.numVials = 10
-        self.stepSize = 200 / self.numVials
+        self.numVials = 12
+        self.stepSize = int(200 / self.numVials)
         self.stepCount = 0
 
         # Setup ROS node and topics
@@ -85,33 +86,34 @@ class Biopayload():
         rospy.Subscriber('/carousel_step', Int8, self.carouselStep)
         rospy.Subscriber('/auger_vert', Int8, self.augerVert)
         rospy.Subscriber('/auger_spin', Int8, self.augerSpin)
+        rospy.spin()
 
-    def carouselStep(self, vialSteps):
+    def carouselStep(self, steps):
       """
       Function for moving the stepper motor
       """
-      steps = vialSteps * self.stepSize
+      motorSteps = abs(steps.data) * self.stepSize
+      self.stepCount += steps.data
 
-      if self.stepCount == self.numVials:
-        steps += (200 % self.numVials)
+      if abs(self.stepCount) >= self.numVials:
+        motorSteps += (200 % self.numVials)
+        if self.stepCount > 0:
+          self.stepCount -= self.numVials
+        else:
+          self.stepCount += self.numVials
 
-        if speed > 0:
-          self.carousel.step(steps, Raspi_MotorHAT.FORWARD,
-                               Raspi_MotorHAT.DOUBLE)
-        elif speed < 0:
-          self.carousel.step(steps, Raspi_MotorHAT.BACKWARD,
-                               Raspi_MotorHAT.DOUBLE)
-
-        self.stepCount += 1
-
+      if steps.data > 0:
+        self.carousel.step(motorSteps, Raspi_MotorHAT.FORWARD, Raspi_MotorHAT.DOUBLE)
+      elif steps.data < 0:
+        self.carousel.step(motorSteps, Raspi_MotorHAT.BACKWARD, Raspi_MotorHAT.DOUBLE)
+        
     def augerVert(self, speed):
       """
       Function for setting the speed of the auger's linear actuator
       """
-      if speed > 0:
+      if speed.data > 0:
         self.auger_vert.run(Raspi_MotorHAT.FORWARD)
-        
-      elif speed < 0:
+      elif speed.data < 0:
         self.auger_vert.run(Raspi_MotorHAT.BACKWARD)
         self.auger_vert.setSpeed(abs(speed))
 
@@ -119,11 +121,10 @@ class Biopayload():
       """
       Function for setting the speed of the auger's DC motor
       """
-      if speed > 0:
+      if speed.data > 0:
         # set DIG1 as LOW, to control direction
         GPIO.output(DIG1, GPIO.LOW)
-          
-      elif speed < 0:
+      elif speed.data < 0:
         # set DIG1 as HIGH, to control direction
         GPIO.output(DIG1, GPIO.HIGH)
 
