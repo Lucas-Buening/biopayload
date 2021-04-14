@@ -81,16 +81,16 @@ class Biopayload():
         self.stepCount = 0
 
         # Setup ROS node and topics
-        rospy.init_node('biopayload_listener', anoynmous=False)
-        rospy.Subscriber('/carousel_step', Twist, self.carouselStep)
-        rospy.Subscriber('/auger_vert', Twist, self.augerVert)
-        rospy.Subscriber('/auger_spin', Twist, self.augerSpin)
+        rospy.init_node('biopayload_listener', anonymous=False)
+        rospy.Subscriber('/carousel_step', Int8, self.carouselStep)
+        rospy.Subscriber('/auger_vert', Int8, self.augerVert)
+        rospy.Subscriber('/auger_spin', Int8, self.augerSpin)
 
-    def carouselStep(self, data):
+    def carouselStep(self, vialSteps):
       """
       Function for moving the stepper motor
       """
-      steps = int(data.linear.x) * self.stepSize
+      steps = vialSteps * self.stepSize
 
       if self.stepCount == self.numVials:
         steps += (200 % self.numVials)
@@ -104,12 +104,10 @@ class Biopayload():
 
         self.stepCount += 1
 
-    def augerVert(self, data):
+    def augerVert(self, speed):
       """
       Function for setting the speed of the auger's linear actuator
       """
-      speed = int(data.linear.x)
-
       if speed > 0:
         self.auger_vert.run(Raspi_MotorHAT.FORWARD)
         
@@ -117,12 +115,10 @@ class Biopayload():
         self.auger_vert.run(Raspi_MotorHAT.BACKWARD)
         self.auger_vert.setSpeed(abs(speed))
 
-    def augerSpin(self, data):
+    def augerSpin(self, speed):
       """
       Function for setting the speed of the auger's DC motor
       """
-      speed = int(data.linear.x)
-
       if speed > 0:
         # set DIG1 as LOW, to control direction
         GPIO.output(DIG1, GPIO.LOW)
