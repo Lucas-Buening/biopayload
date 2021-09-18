@@ -115,7 +115,7 @@ class Biopayload():
         self.auger_vert.run(Raspi_MotorHAT.FORWARD)
       elif speed.data < 0:
         self.auger_vert.run(Raspi_MotorHAT.BACKWARD)
-        self.auger_vert.setSpeed(abs(speed))
+        self.auger_vert.setSpeed(abs(speed.data))
 
     def augerSpin(self, speed):
       """
