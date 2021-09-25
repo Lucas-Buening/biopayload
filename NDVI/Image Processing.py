@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
-
+# ROS Image message
+from sensor_msgs.msg import Image
 
 def contrast_stretch(im):
     """
@@ -82,6 +83,28 @@ def NDVITransform(im):
 
     return ndvi
 
+def msgTransform(msg):
 
-image = cv2.imread("Images\\blogger-image.jpg", 1)
-NDVITransform(image)
+    try:
+        # Convert your ROS Image message to OpenCV2
+        cv2_img = bridge.imgmsg_to_cv2(msg, "bgr8")
+    except CvBridgeError as e:
+        print(e)
+
+    # Save your OpenCV2 image as a jpeg
+    cv2.imwrite('rock_RGB.jpeg', cv2_img)
+
+    ndvi = NDDVITransform(cv2_img)
+    cv2.imwrite('rock_NDVI.jpeg', cv2_img)
+
+class Rock_Analysis:
+
+    def __init__(self):
+        rospy.init_node("rockimg_listener", anonymous=False)
+        rospy.Subscriber('/rock_img', Image, msgTransform)
+
+        #image = cv2.imread("Images\\blogger-image.jpg", 1)
+        #NDVITransform(image)
+
+if __name__ == '__main__':
+    rock_analysis = Rock_Analysis
