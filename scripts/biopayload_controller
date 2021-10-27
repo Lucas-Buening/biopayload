@@ -128,7 +128,7 @@ class Biopayload():
         # set DIG1 as HIGH, to control direction
         GPIO.output(DIG1, GPIO.HIGH)
 
-      self.auger_spin.start(abs(speed))
+      self.auger_spin.start(abs(speed.data))
 
 
 if __name__ == '__main__':
