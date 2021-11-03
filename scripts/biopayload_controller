@@ -67,19 +67,15 @@ class Biopayload():
 
     def __init__(self):
         # Get the motor objects from the Raspi motor hat
-        # carousel stepper, 200 steps/rev (1.8 degs/step), motor port 1
+        # carousel stepper, 200 steps/rev (1.8 degs/step), motor port 1, 30 rpm
         self.carousel = mh.getStepper(200, 1)
+        self.carousel.setSpeed(30)
+
         # auger vertical movement motor, motor port 3
         self.auger_vert = mh.getMotor(3)
 
         # Rename Cytron Port M1 as auger spin
         self.auger_spin = p1
-
-        # Create variables for controlling the stepper motor
-        self.carousel.setSpeed(30)
-        self.numVials = 12
-        self.stepSize = int(200 / self.numVials)
-        self.stepCount = 0
 
         # Setup ROS node and topics
         rospy.init_node('biopayload_listener', anonymous=False)
@@ -92,20 +88,10 @@ class Biopayload():
       """
       Function for moving the stepper motor
       """
-      motorSteps = abs(steps.data) * self.stepSize
-      self.stepCount += steps.data
-
-      if abs(self.stepCount) >= self.numVials:
-        motorSteps += (200 % self.numVials)
-        if self.stepCount > 0:
-          self.stepCount -= self.numVials
-        else:
-          self.stepCount += self.numVials
-
       if steps.data > 0:
-        self.carousel.step(motorSteps, Raspi_MotorHAT.FORWARD, Raspi_MotorHAT.DOUBLE)
+        self.carousel.step(steps.data, Raspi_MotorHAT.FORWARD, Raspi_MotorHAT.DOUBLE)
       elif steps.data < 0:
-        self.carousel.step(motorSteps, Raspi_MotorHAT.BACKWARD, Raspi_MotorHAT.DOUBLE)
+        self.carousel.step(steps.data, Raspi_MotorHAT.BACKWARD, Raspi_MotorHAT.DOUBLE)
         
     def augerVert(self, speed):
       """
