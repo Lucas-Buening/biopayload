@@ -113,6 +113,7 @@ class Biopayload():
 
       # Rename Digital Stepper Driver as carousel step
       self.carousel_step = DigitalStepperDriver()
+      self.carousel_step.enable()
 
       # Setup ROS node and topics
       rospy.init_node('biopayload_listener', anonymous=False)
