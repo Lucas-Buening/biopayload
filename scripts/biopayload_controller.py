@@ -88,6 +88,7 @@ class DigitalStepperDriver():
     GPIO.output(self.PUL, GPIO.HIGH)
     time.sleep(3.0/1000000)   # Sleep for 3 microseconds
     GPIO.output(self.PUL, GPIO.LOW)
+    time.sleep(3.0/1000000)   # Sleep for 3 microseconds
     self.stepCount += 1
 
   def step(self, steps):
