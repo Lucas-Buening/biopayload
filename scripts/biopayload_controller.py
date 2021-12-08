@@ -75,8 +75,10 @@ class DigitalStepperDriver():
     GPIO.setup(self.DIR, GPIO.OUT)
     GPIO.setup(self.PUL, GPIO.OUT)
 
-    # Set step count to 0
+    # Initilize fields
     self.stepCount = 0
+    self.pulseWidth = 3.0/1000000
+    self.microsteps = 400
 
   def disable(self):
     GPIO.output(self.ENA, GPIO.LOW)
@@ -84,11 +86,14 @@ class DigitalStepperDriver():
   def enable(self):
     GPIO.output(self.ENA, GPIO.HIGH)
 
+  def setRPM(self, rpm):
+    self.pulseWidth = min((30 / (self.microsteps * rpm)), 3.0/1000000)
+
   def oneStep(self):
     GPIO.output(self.PUL, GPIO.HIGH)
-    time.sleep(3.0/1000000)   # Sleep for 3 microseconds
+    time.sleep(self.pulseWidth)
     GPIO.output(self.PUL, GPIO.LOW)
-    time.sleep(3.0/1000000)   # Sleep for 3 microseconds
+    time.sleep(self.pulseWidth)
     self.stepCount += 1
 
   def step(self, steps):
@@ -115,6 +120,7 @@ class Biopayload():
       # Rename Digital Stepper Driver as carousel step
       self.carousel_step = DigitalStepperDriver()
       self.carousel_step.enable()
+      self.carousel_step.setRPM(200)
 
       # Setup ROS node and topics
       rospy.init_node('biopayload_listener', anonymous=False)
