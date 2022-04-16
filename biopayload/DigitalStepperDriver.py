@@ -39,7 +39,7 @@ class StepperMotorDSD():
         '''Turn on the stepper motor'''
         self.ENA.set(1)
 
-    def setRPM(self, rpm: int) -> None:
+    def set_rpm(self, rpm: int) -> None:
         '''Calculate pulse width for desired rpm'''
         self.pulseWidth = min((30 / (self.microsteps * rpm)), 3.0/1000000)
 

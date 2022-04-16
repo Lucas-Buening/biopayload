@@ -21,22 +21,30 @@ CYTRON_PWM_FREQ = 100
 class MotorPWM():
     '''Class for a DC motor driven by PWM'''
 
-    def __init__(self, drive: PinPWM, direction: PinOutput) -> None:
+    def __init__(self, drive_pin: PinPWM, direction_pin: PinOutput, speed: int = 0) -> None:
         '''Set the pins used for driving and setting the direction of the motor'''
-        self.drive = drive
-        self.direction = direction
+        self.drive_pin = drive_pin
+        self.direction_pin = direction_pin
+        self.speed = speed
 
-    def set_direction(self, speed: int) -> None:
-        '''Set the direction of rotation of the motor'''
-        if speed > 0:
-            self.direction.set(0)
-        elif speed < 0:
-            self.direction.set(1)
+    def start(self, speed: int = 0) -> None:
+        '''Turn on the motor'''
+        self.set_speed(speed)
+        self.drive_pin.start(abs(self.speed))
+
+    def set_direction(self, direction: int) -> None:
+        '''Set the direction of rotation of the motor, positive for counter-clockwise and negative for clockwise'''
+        if direction >= 0:
+            self.direction_pin.set(0)
+        self.direction_pin.set(1)
 
     def set_speed(self, speed: int) -> None:
         '''Set the speed of the motor'''
         self.set_direction(speed)
-        self.drive.start(abs(speed))
+
+    def stop(self) -> None:
+        '''Turn off the motor'''
+        self.drive_pin.start(0)
 
 
 class CytronMotorHat():
