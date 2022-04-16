@@ -13,9 +13,9 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='user',
-    maintainer_email='user@todo.todo',
-    description='TODO: Package description',
+    maintainer='Lucas Buening',
+    maintainer_email='lucas.r.buening@gmail.com',
+    description='Controls the Biopayload component of the Boiler Robotics Rover',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={

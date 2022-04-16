@@ -69,11 +69,13 @@ class DigitalStepperDriver():
     '''Class for creating stepper motors connected to the Digital Stepper Driver, driven through Raspberry Pi GPIO'''
 
     def __init__(self, ENA_pin: int, DIR_pin: int, PUL_pin: int) -> None:
+        '''Save specified pin numbers for the enable, direction, and pulse pins'''
         self.ENA_pin = ENA_pin
         self.DIR_pin = DIR_pin
         self.PUL_pin = PUL_pin
 
     def get_stepper(self, rpm: int = 200, microsteps: int = 400) -> StepperMotorDSD:
+        '''Create a StepperMotorDSD configured to use the pins that the Digital Stepper Driver is connected to'''
         ENA = RpiPinOutput(self.ENA_pin)
         DIR = RpiPinOutput(self.DIR_pin)
         PUL = RpiPinOutput(self.PUL_pin)
