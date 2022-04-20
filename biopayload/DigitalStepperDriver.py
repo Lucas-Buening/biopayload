@@ -27,7 +27,7 @@ class StepperMotorDSD():
         self.DIR = DIR
         self.PUL = PUL
 
-        self.pulseWidth = min((30 / (self.microsteps * rpm)), 3.0/1000000)
+        self._pulseWidth = min((30 / (self.microsteps * rpm)), 3.0/1000000)
         self.microsteps = microsteps
         self.stepCount = 0
 
@@ -41,7 +41,7 @@ class StepperMotorDSD():
 
     def set_rpm(self, rpm: int) -> None:
         '''Calculate pulse width for desired rpm'''
-        self.pulseWidth = min((30 / (self.microsteps * rpm)), 3.0/1000000)
+        self._pulseWidth = min((30 / (self.microsteps * rpm)), 3.0/1000000)
 
     def set_direction(self, steps: int) -> None:
         '''Set the rotation direction'''
@@ -53,9 +53,9 @@ class StepperMotorDSD():
     def _one_step(self) -> None:
         '''Take one step (step angle is based on microstepping setting)'''
         self.PUL.set(1)
-        sleep(self.pulseWidth)
+        sleep(self._pulseWidth)
         self.PUL.set(0)
-        sleep(self.pulseWidth)
+        sleep(self._pulseWidth)
         self.stepCount += 1
 
     def step(self, steps: int) -> None:
