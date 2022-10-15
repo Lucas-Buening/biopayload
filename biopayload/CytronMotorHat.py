@@ -11,14 +11,14 @@ Status:         In progress
 ===============================================================================
 '''
 # Local Imports
-from interfaces import PinOutput, PinPWM
+from interfaces import PinOutput, PinPWM, DCMotor
 from RaspiGpio import RpiPinOutput, RpiPinPWM
 
 # Set the PWM frequency to drive the motors connected to the Cytron Motor Hat
 CYTRON_PWM_FREQ = 100
 
 
-class MotorPWM():
+class MotorPWM(DCMotor):
     '''Class for a DC motor driven by PWM'''
 
     def __init__(self, drive_pin: PinPWM, direction_pin: PinOutput, speed: int = 0) -> None:

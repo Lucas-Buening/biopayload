@@ -14,11 +14,11 @@ Status:         In progress
 from time import sleep
 
 # Local imports
-from interfaces import PinOutput
+from interfaces import PinOutput, StepperMotor
 from RaspiGpio import RpiPinOutput
 
 
-class StepperMotorDSD():
+class StepperMotorDSD(StepperMotor):
     '''Class for stepper motor driven by a Digital Stepper Driver'''
 
     def __init__(self, ENA: PinOutput, DIR: PinOutput, PUL: PinOutput, rpm: int = 200, microsteps: int = 400) -> None:
