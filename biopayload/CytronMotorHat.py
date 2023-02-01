@@ -29,18 +29,19 @@ class MotorPWM(DCMotor):
 
     def start(self, speed: int = 0) -> None:
         '''Turn on the motor'''
-        self.set_speed(speed)
+        self.set_direction(speed)
         self.drive_pin.start(abs(self.speed))
 
     def set_direction(self, direction: int) -> None:
         '''Set the direction of rotation of the motor, positive for counter-clockwise and negative for clockwise'''
         if direction >= 0:
             self.direction_pin.set(0)
-        self.direction_pin.set(1)
+	else: 
+            self.direction_pin.set(1)
 
     def set_speed(self, speed: int) -> None:
         '''Set the speed of the motor'''
-        self.set_direction(speed)
+        self.start(speed)
 
     def stop(self) -> None:
         '''Turn off the motor'''
