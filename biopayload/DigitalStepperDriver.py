@@ -33,11 +33,11 @@ class StepperMotorDSD(StepperMotor):
 
     def disable(self) -> None:
         '''Turn off the stepper motor'''
-        self.ENA.set(0)
+        self.ENA.set(1) # Enable is active low
 
     def enable(self) -> None:
         '''Turn on the stepper motor'''
-        self.ENA.set(1)
+        self.ENA.set(0) # Enable is active low
 
     def set_rpm(self, rpm: int) -> None:
         '''Calculate pulse width for desired rpm'''
