@@ -29,6 +29,7 @@ class MotorPWM(DCMotor):
 
     def start(self, speed: int = 0) -> None:
         '''Turn on the motor'''
+	self.speed = speed
         self.set_direction(speed)
         self.drive_pin.start(abs(speed))
 
